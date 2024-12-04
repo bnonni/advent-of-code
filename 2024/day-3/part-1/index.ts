@@ -1,4 +1,4 @@
-import data from './data.js'
+import data from '../data.js'
 
 const corrupted = data.trim();
 const pattern = /mul\([0-9]{1,3},[0-9]{1,3}\)/g;
@@ -12,3 +12,4 @@ instructions
         .map(Number)
         .reduce((a, b) => sum += (a * b)));
 console.log(`Sum of muls: ${sum}`);
+// Sum of muls: 184576302
