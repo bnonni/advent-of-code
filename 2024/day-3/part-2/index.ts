@@ -10,7 +10,7 @@ let enabled = true;
 const corrupted = data.trim();
 const blocks = corrupted.split(/(do\(\)|don't\(\))/);
 
-appendFileSync(outlog, `${blocks.join('')}\n`);
+appendFileSync(outlog, `${blocks}\n`);
 
 blocks.forEach(block => {
     if (block === 'do()') {
