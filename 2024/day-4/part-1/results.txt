@@ -1,0 +1,99 @@
+12/5/2024, 5:20:04 PM
+The rowMatches is 764
+The columnMatches is 906
+The diagonalMatches is 3054
+The total is 4724 // Wrong - Too High
+
+12/5/2024, 5:22:40 PM
+The rowMatches is 764
+The columnMatches is 906
+The diagonalMatches is 1540
+The total is 3210 // Wrong - Too High (?)
+
+12/5/2024, 5:28:09 PM
+The rowMatches is 382
+The columnMatches is 453
+The diagonalMatches is 770
+The total is 1605
+
+12/5/2024, 5:59:02 PM
+rowMatches = 206
+columnMatches = 247
+The leftToRightMatches is 193
+The reverseLeftToRightMatches is 230
+The rightToLeftMatches is 186
+The reverseRightToLeftMatches is 238
+The total is 1750
+
+12/5/2024, 6:06:47 PM
+rowMatches = 206
+reverseRowMatches = 206
+columnMatches = 247
+reverseColumnMatches = 244
+The leftToRightMatches is 193
+The reverseLeftToRightMatches is 230
+The rightToLeftMatches is 186
+The reverseRightToLeftMatches is 238
+The total is 1750
+
+12/5/2024, 6:07:58 PM
+rowMatches = 206
+reverseRowMatches = 206
+columnMatches = 247
+reverseColumnMatches = 244
+The leftToRightMatches is 193
+The reverseLeftToRightMatches is 230
+The rightToLeftMatches is 186
+The reverseRightToLeftMatches is 238
+The total is 1750
+
+12/5/2024, 6:08:37 PM
+rowMatches: 206
+reverseRowMatches: 206
+columnMatches: 247
+reverseColumnMatches: 244
+leftToRightMatches: 193
+reverseLeftToRightMatches: 230
+rightToLeftMatches: 186
+reverseRightToLeftMatches: 238
+The total is 1750
+
+12/5/2024, 6:13:46 PM
+rowMatches: 206
+reverseRowMatches: 206
+columnMatches: 247
+reverseColumnMatches: 244
+leftToRightMatches: 193
+rightToLeftMatches: 186
+The total is 1282
+
+12/5/2024, 6:25:19 PM
+rowMatches: 206
+reverseRowMatches: 206
+columnMatches: 247
+reverseColumnMatches: 244
+diagonalMatches: 1760
+The total is 2663
+
+12/5/2024, 6:31:20 PM
+rowcount: 412
+columncount: 983
+diagonalcount: 1760
+The total is 3155
+
+12/5/2024, 6:32:05 PM
+rowMatches: 206
+reverseRowMatches: 206
+columnMatches: 247
+reverseColumnMatches: 244
+diagonalMatches: 1760
+The total is 2663
+
+12/5/2024, 6:35:06 PM
+rowMatches: 206
+reverseRowMatches: 206
+columnMatches: 247
+reverseColumnMatches: 244
+diagonalMatches: 1760
+The total is 2663
+

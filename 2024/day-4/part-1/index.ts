@@ -2,116 +2,111 @@ import { appendFileSync, writeFileSync } from 'fs';
 import data from '../data.js';
 
 const outlog = `${process.cwd()}/2024/day-4/part-1/out.log`;
+const resultstxt = `${process.cwd()}/2024/day-4/part-1/results.txt`;
 writeFileSync(outlog, '');
 
-let total = 0;
-const XMAS = /XMAS/gm;
+let totalMatches = 0;
+const XMAS = /XMAS/g;
+const rows = data.trim().split('\n');
+const reverseRows = rows.map(row => row.split('').reverse().join(''));
+appendFileSync(outlog, `-------------------- rows --------------------\n${rows}\n\n`);
+appendFileSync(outlog, `-------------------- reverseRows --------------------\n${reverseRows}\n\n`);
 
-const wordsearch = data.trim()
-const rows = wordsearch.split('\n');
-const rowlength = rows[0].length;
-
+let rowMatches = 0;
 for (let row of rows) {
-    total += (row.match(XMAS)?.length ?? 0) * 2;
+    rowMatches += row.match(XMAS)?.length ?? 0;
 }
-appendFileSync(outlog, `-------------------- rows --------------------\n${rows.join('\n')}\n`);
-appendFileSync(outlog, `-------------------- total --------------------\n${total}\n`);
+appendFileSync(outlog, `-------------------- rowMatches --------------------\n${rowMatches}\n\n`);
+const rowMessage = `rowMatches: ${rowMatches}`;
+console.log(rowMessage);
 
-const columns = [];
-for (let i = 0; i < rowlength - 1; i++) {
-    let column = '';
-    for (let j = 0; j < rowlength; j++) {
-        column += rows[j][i];
+let reverseRowMatches = 0;
+for (let reverseRow of reverseRows) {
+    reverseRowMatches += reverseRow.match(XMAS)?.length ?? 0;
+}
+appendFileSync(outlog, `-------------------- reverseRowMatches --------------------\n${reverseRowMatches}\n\n`);
+const reverseRowMessage = `reverseRowMatches: ${rowMatches}`;
+console.log(reverseRowMessage);
+
+let columnMatches = 0;
+const rowMatrix = rows.map(row => row.split(''));
+const columns = rowMatrix[0].map((_, colIndex) => rowMatrix.map(row => row[colIndex])).map(col => col.join(''));
+appendFileSync(outlog, `-------------------- columns --------------------\n${columns}\n\n`);
+for (let column of columns) {
+    columnMatches += column.match(XMAS)?.length ?? 0;
+}
+appendFileSync(outlog, `-------------------- columnMatches --------------------\n${columnMatches}\n\n`);
+const columnMessage = `columnMatches: ${columnMatches}`;
+console.log(columnMessage);
+
+/** --------------------------------- */
+let reverseColumnMatches = 0;
+const reverseColumns = columns.map(col => col.split('').reverse().join(''));
+appendFileSync(outlog, `-------------------- reverseColumns --------------------\n${reverseColumns}\n\n`);
+for (let reverseColumn of reverseColumns) {
+    reverseColumnMatches += reverseColumn.match(XMAS)?.length ?? 0;
+}
+appendFileSync(outlog, `-------------------- reverseColumnMatches --------------------\n${reverseColumnMatches}\n\n`);
+const reverseColumnMessage = `reverseColumnMatches: ${reverseColumnMatches}`;
+console.log(reverseColumnMessage);
+
+const n = rows[0].length;
+const diagonals: string[][] = [];
+
+for (let a = 0; a < 2 * n - 1; a++) {
+    const diagonal: string[] = [];
+    for (let b = 0; b < n; b++) {
+        const c = a - b; // Column index
+        if (c >= 0 && c < n) {
+            diagonal.push(rowMatrix[b][c]);
+        }
     }
-    columns.push(column);
-    total += (column.match(XMAS)?.length ?? 0) * 2;
+    diagonals.push(diagonal);
+    diagonals.push(diagonal.reverse());
 }
-appendFileSync(outlog, `-------------------- columns --------------------\n${columns.join('\n')}\n`);
-appendFileSync(outlog, `-------------------- total --------------------\n${total}\n`);
 
-const tlbrRows = [];
-for (let i = 0; i < rowlength; i++) {
-    let tlbrRow = '';
-    for (let j = 0; j < rowlength; j++) {
-        tlbrRow = rows[j][i];
+for (let d = 0; d < 2 * n - 1; d++) {
+    const diagonal: string[] = [];
+    for (let e = 0; e < n; e++) {
+        const f = e + (n - 1 - d); // Column index
+        if (f >= 0 && f < n) {
+            diagonal.push(rowMatrix[e][f]);
+        }
     }
-    tlbrRows.push(tlbrRow);
-
-    total += (tlbrRow.match(XMAS)?.length ?? 0) * 2;
+    diagonals.push(diagonal);
+    diagonals.push(diagonal.reverse());
 }
 
-const tlbrColumns = [];
-for (let i = 0; i < rowlength; i++) {
-    let tlbrRow = '';
-    let tlbrColumn = '';
-    for (let j = 0, k = i; j < rowlength && k < rowlength; j++, k++) {
-        tlbrRow = rows[i][j];
-        tlbrColumn += rows[j][i];
-    }
-    tlbrRows.push(tlbrRow);
-    tlbrColumns.push(tlbrColumn);
-
-    total += (tlbrRow.match(XMAS)?.length ?? 0) * 2;
-    total += (tlbrColumn.match(XMAS)?.length ?? 0) * 2;
+let diagonalMatches = 0;
+for (let diagonal of diagonals) {
+    diagonalMatches += diagonal.join('').match(XMAS)?.length ?? 0;
 }
-appendFileSync(outlog, `------------ tlbrRows ------------\n${tlbrRows.join('\n')}\n`);
-appendFileSync(outlog, `------------ tlbrColumns ------------\n${tlbrColumns.join('\n')}\n`);
-appendFileSync(outlog, `-------------------- total --------------------\n${total}\n`);
+const diagonalMessage = `diagonalMatches: ${diagonalMatches}`;
+console.log(diagonalMessage);
 
-const trblRows = [];
-const trblColumns = [];
-for (let i = 0; i < rowlength; i++) {
-    let trblRow = '';
-    let trblColumn = '';
-    for (let j = 0, k = rowlength - 1 - i; j < rowlength && k >= 0; j++, k--) {
-        trblRow += rows[i][k];
-        trblColumn += rows[j][k];
-    }
-    trblRows.push(trblRow);
-    trblColumns.push(trblColumn);
-    total += (trblRow.match(XMAS)?.length ?? 0) * 2;
-    total += (trblColumn.match(XMAS)?.length ?? 0) * 2;
-}
-appendFileSync(outlog, `-------------- trblRows --------------\n${trblRows.join('\n')}\n`);
-appendFileSync(outlog, `-------------- trblColumns --------------\n${trblColumns.join('\n')}\n`);
-appendFileSync(outlog, `-------------------- total --------------------\n${total}\n`);
+appendFileSync(outlog, `-------------------- diagonals --------------------\n${diagonals.join('')}\n\n`);
+appendFileSync(outlog, `-------------------- diagonalMatches --------------------\n${diagonalMatches}\n\n`);
 
-// const bltrRows = [];
-// const bltrColumns = [];
-// for (let i = 0; i < rowlength; i++) {
-//     let bltrRow = '';
-//     let bltrColumn = '';
+totalMatches += (
+    rowMatches +
+    reverseRowMatches +
+    columnMatches +
+    reverseColumnMatches +
+    diagonalMatches
+);
+appendFileSync(outlog, `-------------------- totalMatches --------------------\n${totalMatches}\n\n`);
+const totalMessage = `The total is ${totalMatches}`;
+console.log(totalMessage);
 
-//     for (let j = i, k = 0; j >= 0 && k < rowlength; j--, k++) {
-//         bltrRow += rows[j][k];
-//         bltrColumn += rows[rowlength - 1 - j][k];
-//     }
-
-//     bltrRows.push(bltrRow);
-//     bltrColumns.push(bltrColumn);
-//     total += (bltrRow.match(XMAS)?.length ?? 0) * 2;
-//     total += (bltrColumn.match(XMAS)?.length ?? 0) * 2;
-// }
-// appendFileSync(outlog, `-------------- bltrRows --------------\n${bltrRows.join('\n')}`);
-// appendFileSync(outlog, `-------------- bltrColumns --------------\n${bltrColumns.join('\n')}`);
-
-// const brtlRows = [];
-// const brtlColumns = [];
-// for (let i = 0; i < rowlength; i++) {
-//     let brtlRow = '';
-//     let brtlColumn = '';
-
-//     for (let j = i, k = rowlength - 1; j >= 0 && k >= 0; j--, k--) {
-//         brtlRow += rows[j][k];
-//         brtlColumn += rows[rowlength - 1 - j][rowlength - 1 - k];
-//     }
-
-//     brtlRows.push(brtlRow);
-//     brtlColumns.push(brtlColumn);
-//     total += (brtlRow.match(XMAS)?.length ?? 0) * 2;
-//     total += (brtlColumn.match(XMAS)?.length ?? 0) * 2;
-// }
-// appendFileSync(outlog, `-------------- brtlRows --------------\n${brtlRows.join('\n')}`);
-// appendFileSync(outlog, `-------------- brtlColumns --------------\n${brtlColumns.join('\n')}`);
-
-console.log(`The total is ${total}`);
+const now = new Date().toLocaleString();
+appendFileSync(
+    resultstxt,
+    `${now}` +
+    `\n${rowMessage}` +
+    `\n${reverseRowMessage}` +
+    `\n${columnMessage}` +
+    `\n${reverseColumnMessage}` +
+    `\n${diagonalMessage}` +
+    `\n${totalMessage}` +
+    `\n\n`
+);
